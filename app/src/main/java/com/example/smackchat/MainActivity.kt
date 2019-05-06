@@ -1,5 +1,6 @@
 package com.example.smackchat
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
@@ -40,18 +41,24 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
 
-        fun loginButtonNavClicked(view: View){
 
-        }
-
-        fun addChannelClicked(view:View){
-
-        }
-
-        fun sendMessageBtnClicked(view:View){
-
-        }
     }
+
+    fun loginButtonNavClicked(view: View){
+        val loginActivityIntent = Intent(this,LoginActivity::class.java)
+        startActivity(loginActivityIntent)
+
+    }
+
+    fun addChannelClicked(view:View){
+
+    }
+
+    fun sendMessageBtnClicked(view:View){
+
+    }
+
+
 
 
 }

@@ -44,8 +44,8 @@
             android:id="@+id/loginButtonNavHeader"
             android:background="@android:color/transparent" android:textColor="@android:color/white"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:onClick="loginButtonNavClicked"/>
+            android:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="parent"
+            android:onClick="loginButtonNavClicked" android:textAlignment="center"/>
     <ImageButton
             android:layout_width="30dp"
             android:layout_height="30dp" app:srcCompat="@drawable/addchannelbutton"
