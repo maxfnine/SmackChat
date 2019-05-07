@@ -1,9 +1,10 @@
-package com.example.smackchat
+package com.example.smackchat.Controller
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.example.smackchat.R
 
 class LoginActivity : AppCompatActivity() {
 
@@ -17,7 +18,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun loginCreateUserBtnClicked(view:View){
-        val createUserIntent = Intent(this,CreateUserActivity::class.java)
+        val createUserIntent = Intent(this, CreateUserActivity::class.java)
         startActivity(createUserIntent)
     }
 }
