@@ -6,4 +6,7 @@ const val URL_LOGIN = "$BASE_URL/account/login"
 const val URL_CREATE_USER = "$BASE_URL/user/add"
 const val URL_GET_USER = "$BASE_URL/user/byEmail/"
 
+const val SOCKET_URL = "https://young-waters-55118.herokuapp.com/"
+
+
 const val BROADCAST_USER_DATA_CHANGE = "BROADCAST_USER_DATA_CHANGE"
