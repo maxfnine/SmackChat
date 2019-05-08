@@ -1,10 +1,11 @@
 package com.example.smackchat.Utilities
 
 const val BASE_URL = "https://young-waters-55118.herokuapp.com/v1"
-const val  URL_REGISTER ="$BASE_URL/account/register"
+const val URL_REGISTER ="$BASE_URL/account/register"
 const val URL_LOGIN = "$BASE_URL/account/login"
 const val URL_CREATE_USER = "$BASE_URL/user/add"
 const val URL_GET_USER = "$BASE_URL/user/byEmail/"
+const val URL_GET_CHANNELS ="$BASE_URL/channel"
 
 const val SOCKET_URL = "https://young-waters-55118.herokuapp.com/"
 
