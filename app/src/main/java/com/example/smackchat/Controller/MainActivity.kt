@@ -15,12 +15,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import com.example.smackchat.Model.Channel
 import com.example.smackchat.R
 import com.example.smackchat.Services.AuthService
+import com.example.smackchat.Services.MessageService
 import com.example.smackchat.Services.UserDataService
 import com.example.smackchat.Utilities.BROADCAST_USER_DATA_CHANGE
 import com.example.smackchat.Utilities.SOCKET_URL
 import io.socket.client.IO
+import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -43,18 +46,15 @@ class MainActivity : AppCompatActivity() {
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+
+        socket.connect()
+        socket.on("channelCreated",onNewChannel)
     }
 
     override fun onResume() {
 
         LocalBroadcastManager.getInstance(this).registerReceiver(userDataChangeReceiver, IntentFilter(BROADCAST_USER_DATA_CHANGE))
-        socket.connect()
         super.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-
     }
 
     override fun onDestroy() {
@@ -128,6 +128,20 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 .show()
+        }
+    }
+
+    private val onNewChannel = Emitter.Listener {
+        args ->
+        runOnUiThread{
+
+            val channelName = args[0] as String
+            val channelDescription = args[1] as String
+            val channelId = args[2] as String
+
+            val newChannel = Channel(channelName,channelDescription,channelId)
+            MessageService.channels.add(newChannel)
+            println(newChannel.name)
         }
     }
 
