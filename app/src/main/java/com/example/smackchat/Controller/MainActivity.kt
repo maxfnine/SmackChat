@@ -26,12 +26,14 @@ import com.example.smackchat.Utilities.SOCKET_URL
 import io.socket.client.IO
 import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : AppCompatActivity() {
 
     val socket = IO.socket(SOCKET_URL)
     lateinit var channelAdapter:ArrayAdapter<Channel>
+    var selectedChannel:Channel? = null
 
     private fun setupAdapters(){
         channelAdapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,MessageService.channels)
@@ -59,6 +61,14 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         setupAdapters()
+
+        channel_list.setOnItemClickListener{
+            _,_,i,l->
+            selectedChannel = MessageService.channels[i]
+            drawerLayout.closeDrawer(GravityCompat.START)
+            updateWithChannel()
+
+        }
 
         if(App.prefs.isLoggedIn){
             AuthService.findUserByEmail(this){
@@ -93,15 +103,24 @@ class MainActivity : AppCompatActivity() {
                 userImageNavHeader.setBackgroundColor(UserDataService.returnAvatarColor(UserDataService.avatarColor))
                 loginButtonNavHeader.text = "Logout"
 
-                MessageService.getChannels(context){
+                MessageService.getChannels{
                     complete->
                     if(complete){
-                        channelAdapter.notifyDataSetChanged()
+                        if(MessageService.channels.count() > 0){
+                            selectedChannel = MessageService.channels[0]
+                            channelAdapter.notifyDataSetChanged()
+                            updateWithChannel()
+                        }
+
                     }
                 }
             }
         }
 
+    }
+
+    fun updateWithChannel(){
+        mainChannelName.text = "#${selectedChannel?.name}"
     }
 
     override fun onBackPressed() {
@@ -139,7 +158,7 @@ class MainActivity : AppCompatActivity() {
             val dialogView = layoutInflater.inflate(R.layout.add_channel_dialog,null)
             builder.setView(dialogView)
                 .setPositiveButton("Add"){
-                    dialogInterface,i ->
+                    _,_ ->
                     val nameTextField = dialogView.findViewById<EditText>(R.id.addChannelNameText)
                     val descTextfield = dialogView.findViewById<EditText>(R.id.addChannelDescText)
                     val channelName = nameTextField.text.toString()
@@ -148,7 +167,7 @@ class MainActivity : AppCompatActivity() {
                     socket.emit("newChannel",channelName,channelDesc)
 
                 }.setNegativeButton("Cancel"){
-                    dialogInterface, i ->
+                    _, _ ->
 
 
                 }
