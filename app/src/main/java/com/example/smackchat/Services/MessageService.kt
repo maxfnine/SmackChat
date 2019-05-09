@@ -7,11 +7,13 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
 import com.example.smackchat.Controller.App
 import com.example.smackchat.Model.Channel
+import com.example.smackchat.Model.Message
 import com.example.smackchat.Utilities.URL_GET_CHANNELS
 import org.json.JSONException
 
 object MessageService {
     val channels = ArrayList<Channel>()
+    val messages = ArrayList<Message>()
 
     fun getChannels(complete:(Boolean)->Unit){
         val channelsRequest = object:JsonArrayRequest(Method.GET,URL_GET_CHANNELS,null, Response.Listener{
